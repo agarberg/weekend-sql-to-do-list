@@ -12,8 +12,8 @@ $(document).ready(function () {
 
 function setupClickListeners() {
     $('#submitBtn').on( 'click', postTask);
-    $('#taskList').on( 'click', '.btn-delete', deleteTask )
-    // $( '.complete').on( 'click', completeTask)
+    $('#taskList').on( 'click', '.btn-delete', deleteTask);
+    $('#taskList').on( 'click', '.btn-complete', completeTask);
   }
 
   // Get TASK LIST FROM SERVER
@@ -29,6 +29,7 @@ function setupClickListeners() {
         for (let i = 0; i < response.length; i++) {
           $("#taskList").append(`<tr>
           <td>${response[i].task}</td>
+          <td>${response[i].completed}</td>
           <td><button class="btn-delete" data-id=${response[i].id}>Delete</button>
           <button class="btn-complete" data-id=${response[i].id}>Completed!</button></td>
           </tr>
@@ -39,10 +40,32 @@ function setupClickListeners() {
         console.log("error in GET", error);
       });
     }
-///////finish get task list
+//finish get task list
+
+//COMPLETE TASK FUNCTION
+
+    function completeTask(){
+      console.log('in completeTask function');
+      let toDoId = $(this).data().id;
+      $.ajax({
+        method: 'PUT',
+        url: `/toDo/${toDoId}`,
+      }).then(function(response){
+        console.log('Task Completed/Updated!');
+        getTaskList();
+      })
+      .catch(function(error){
+        console.log('Error updating', error);
+    })
+  }
+
+    
+  
+
+    
+    
 
 
-    ///COMPLETE TASK FUNCTION
 
     ///DELETE TASK FUNCTION
     function deleteTask() {
@@ -60,7 +83,7 @@ function setupClickListeners() {
           console.log('Error DELETEing', error);
       })
     }
-//// END DELETE FUNCTION
+// END DELETE FUNCTION
 
 
       function postTask() {

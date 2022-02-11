@@ -26,12 +26,12 @@ router.post('/', (req, res) => {
     console.log('in POST', newTask);
     
     const queryText = `
-    INSERT INTO "list" ("priority", "task")
-    VALUES ($1, $2);
+    INSERT INTO "list" ("priority", "task", "completed")
+    VALUES ($1, $2, FALSE);
     `;
 
         //parameterized query below, prevents SQL injection
-    pool.query(queryText, [newTask.priority, newTask.task])
+    pool.query(queryText, [newTask.priority, newTask.task, list.completed])
     .then((result) => {
         res.sendStatus(201);
     })
@@ -43,7 +43,24 @@ router.post('/', (req, res) => {
 
 
 // PUT
-
+router.put("/:id", (req, res) => {
+  let idToUpdate = req.params.id;
+  console.log(req.body);
+  console.log(idToUpdate);
+  let sqlText = '';
+  sqlText = `
+      UPDATE list
+      SET completed = 'TRUE', priority = '0'
+      WHERE id=$1;`
+  let sqlValues = [idToUpdate];
+  pool.query(sqlText, sqlValues)
+  .then(result => {
+  res.sendStatus(200);
+  }).catch(err => {
+  console.log(err)
+  res.sendStatus(500);  
+  })
+})
 
 // DELETE
 router.delete('/:id', (req, res) => {
