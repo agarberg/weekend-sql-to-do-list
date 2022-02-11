@@ -11,23 +11,21 @@ $(document).ready(function () {
 
 
 function setupClickListeners() {
-    $( '#inputText' ).on( 'click', postTask);
-      console.log( 'in addButton on click' );
-    $( '.btn-delete').on( 'click', deleteTask )
-    $( '.complete').on( 'click', completeTask)
+    $('#submitBtn').on( 'click', postTask);
+    $('#taskList').on( 'click', '.btn-delete', deleteTask )
+    // $( '.complete').on( 'click', completeTask)
   }
 
   // Get TASK LIST FROM SERVER
-
   function getTaskList() {
-    console.log("in get tast list");
-    $('#taskList').empty();
+    console.log("in get task list");
     $.ajax({
       type: "GET",
       url: "/todo",
     })
     .then(function (response) {
         console.log(response);
+        $("#taskList").empty();
         for (let i = 0; i < response.length; i++) {
           $("#taskList").append(`<tr>
           <td>${response[i].task}</td>
@@ -40,33 +38,41 @@ function setupClickListeners() {
       .catch(function (error) {
         console.log("error in GET", error);
       });
+    }
+///////finish get task list
 
-    //start post to submit 
-    //   function addBook(bookToAdd) {
-    //     $.ajax({
-    //       type: 'POST',
-    //       url: '/books',
-    //       data: bookToAdd,
-    //       }).then(function(response) {
-    //         console.log('Response from server.', response);
-    //         refreshBooks();
-    //       }).catch(function(error) {
-    //         console.log('Error in POST', error)
-    //         alert('Unable to add book at this time. Please try again later.');
-    //       });
-    //   }
-      
 
     ///COMPLETE TASK FUNCTION
 
     ///DELETE TASK FUNCTION
+    function deleteTask() {
+      console.log('in delete function')
+      let toDoId = $(this).data().id;
+      $.ajax({
+          method: 'DELETE',
+          url: `/toDo/${toDoId}`
+      })
+      .then(function(response) {
+          console.log('Deleted it!');
+          getTaskList();
+      })
+      .catch(function(error) {
+          console.log('Error DELETEing', error);
+      })
+    }
+//// END DELETE FUNCTION
 
-    
 
       function postTask() {
+        if ($("#inputText").val() === '') 
+        {
+          alert('You must fill out the entire form.');
+          return;
+      }
+        console.log('in submitTask')
         let taskToAdd = {
           task: $("#inputText").val(),
-          priority: $("#priority").val(),
+          priority: $("#priority").val()
         };
         $.ajax({
           method: "POST",
@@ -84,6 +90,8 @@ function setupClickListeners() {
       
       
           }).catch(function(error) {
-            console.log('Error in POST postKoala()', error)
-            alert('Unable to add koala at this time. Please try again later.');
-          });
+            console.log('Error in POST postTask()', error)
+            alert('Unable to add task at this time. Please try again later.');
+          })
+      }
+    
