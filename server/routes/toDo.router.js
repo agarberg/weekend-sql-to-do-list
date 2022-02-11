@@ -1,11 +1,11 @@
 const express = require("express");
-const toDoRouter = express.Router();
+const router = express.Router();
 
 // DB CONNECTION
 const pool = require("../modules/pool");
 
 // GET
-toDo.get("/", (req, res) => {
+routerget("/", (req, res) => {
 
     let queryText = 'SELECT * FROM "allKoalas"';
     console.log("GETTING?!");
@@ -53,4 +53,4 @@ toDo.get("/", (req, res) => {
 
 // // DELETE
 
-// module.exports = koalaRouter;
+module.exports = router;
