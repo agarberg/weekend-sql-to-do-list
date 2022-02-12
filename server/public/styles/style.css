@@ -1,3 +1,6 @@
-h1{
-    color: red
+.btn-complete {
+    background-color: white;
+}
+.btn-complete.green {
+    background-color: green; 
 }

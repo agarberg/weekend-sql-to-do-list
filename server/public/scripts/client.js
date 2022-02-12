@@ -1,7 +1,7 @@
 console.log("js is good to go");
 
 $(document).ready(function () {
-    console.log("JQ good to go ");
+    console.log("JQuery is  good to go ");
     setupClickListeners();
     getTaskList();
     // load existing list on page load
@@ -13,8 +13,11 @@ $(document).ready(function () {
 function setupClickListeners() {
     $('#submitBtn').on( 'click', postTask);
     $('#taskList').on( 'click', '.btn-delete', deleteTask);
-    $('#taskList').on( 'click', '.btn-complete', completeTask);
-  }
+    $('#taskList').on( 'click', '.btn-complete', completeTask)
+    
+}
+
+
 
   // Get TASK LIST FROM SERVER
   function getTaskList() {
@@ -29,9 +32,8 @@ function setupClickListeners() {
         for (let i = 0; i < response.length; i++) {
           $("#taskList").append(`<tr>
           <td>${response[i].task}</td>
-          <td>${response[i].completed}</td>
           <td><button class="btn-delete" data-id=${response[i].id}>Delete</button>
-          <button class="btn-complete" data-id=${response[i].id}>Completed!</button></td>
+          <button class="btn-complete" id="btn-complete" data-id=${response[i].id}>Completed!</button></td>
           </tr>
     `);
         }
@@ -44,26 +46,24 @@ function setupClickListeners() {
 
 //COMPLETE TASK FUNCTION
 
-    function completeTask(){
-      console.log('in completeTask function');
-      let toDoId = $(this).data().id;
-      $.ajax({
-        method: 'PUT',
-        url: `/toDo/${toDoId}`,
-      }).then(function(response){
-        console.log('Task Completed/Updated!');
-        getTaskList();
-      })
-      .catch(function(error){
-        console.log('Error updating', error);
+
+
+    
+  function completeTask(){
+    console.log('In Button ColorChanger');
+    let id = $(this).data('id')
+    let completed = $(this).data ('completed');
+    $.ajax({
+      type: 'PUT',
+      url: `/todo/${id}`,
+      data: {TRUE: !completed}
+    }).then(function(response){
+      console.log('finished PUT', response);
+      getTaskList();
+    }).catch(function (err){
+      console.log('error updating', err);
     })
-  }
-
-    
-  
-
-    
-    
+  };
 
 
 
@@ -95,7 +95,7 @@ function setupClickListeners() {
         console.log('in submitTask')
         let taskToAdd = {
           task: $("#inputText").val(),
-          priority: $("#priority").val()
+          priority: $("#priority").val(),
         };
         $.ajax({
           method: "POST",

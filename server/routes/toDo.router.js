@@ -27,11 +27,11 @@ router.post('/', (req, res) => {
     
     const queryText = `
     INSERT INTO "list" ("priority", "task", "completed")
-    VALUES ($1, $2, FALSE);
+    VALUES ($1, $2, $3);
     `;
 
         //parameterized query below, prevents SQL injection
-    pool.query(queryText, [newTask.priority, newTask.task, list.completed])
+    pool.query(queryText, [newTask.priority, newTask.task, newTask.completed])
     .then((result) => {
         res.sendStatus(201);
     })
