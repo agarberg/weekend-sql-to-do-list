@@ -23,7 +23,7 @@ function setupClickListeners() {
         console.log(response);
         $("#taskList").empty();
         for (let i = 0; i < response.length; i++) {
-          if (response[i].completed) { 
+          if (response[i].completed){ 
           $("#taskList").append(`<tr class="cmpl">
           <td>${response[i].task}</td>
           <td><button type="button" class="btn-delete" data-id=${response[i].id}>Delete</button>
@@ -45,7 +45,7 @@ function setupClickListeners() {
   }
 //finish get task list
 //COMPLETE TASK FUNCTION
-  function completeTask(){
+  function completeTask( {
     console.log('In completeTask');
     console.log(this);
     let id = $(this).data('id')
@@ -53,17 +53,18 @@ function setupClickListeners() {
     $.ajax({
       type: 'PUT',
       url: `/todo/${id}`,
-    }).then(function(response){
+    }).then(function(response) {
       console.log('finished PUT', response);
       getTaskList();
-    }).catch(function (err){
+    }).catch(function (err) {
       console.log('error updating', err);
     })
   };
     ///DELETE TASK FUNCTION
     function deleteTask() {
-      console.log('in delete function')
+      
       let toDoId = $(this).data().id;
+      if (confirm('Are you sure you want to delete this?')){ 
       $.ajax({
           method: 'DELETE',
           url: `/toDo/${toDoId}`
@@ -76,15 +77,20 @@ function setupClickListeners() {
           console.log('Error DELETEing', error);
       })
     }
-
+      else {
+        console.log('not deleted due to user request')
+        return
+    }
+  }
 // END DELETE FUNCTION
+
 // TAKE TASK INSERTED AND SEND TO DATABASE
     function postTask() {
         if ($("#inputText").val() === '') 
-        {
+          {
           alert('You forgot to add your task, silly!');
           return;
-      }
+        }
         console.log('in submitTask')
         let taskToAdd = {
           task: $("#inputText").val(),
@@ -101,11 +107,8 @@ function setupClickListeners() {
             //empty inputs
             $("#inputText").val(""),
             $("#priority").val(5)
-      
             // append to DOM with a function here
             getTaskList();
-      
-      
           }).catch(function(error) {
             console.log('Error in POST postTask()', error)
             alert('Unable to add task at this time. Please try again later.');
