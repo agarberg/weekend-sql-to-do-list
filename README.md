@@ -3,7 +3,7 @@ To Do List using SQL
 
 ## Description
 In todays world, forgetfulness has become a pandemic and task prioritization has become a lost art. 
-This application allows the user to input task and choose a priority level with a slider. A slider was chosen for ease of use. The user should have an easy way of portraying task priority without having to think about it. 
+This application allows the user to input a task and choose a priority level with a slider. A slider was chosen for ease of use. The user should have an easy way of portraying task priority without having to think about it. 
 
 After a task has been submitted, a list will start and current tasks will be shown under the "Task Queue". 
 
