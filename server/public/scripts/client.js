@@ -67,7 +67,6 @@ function setupClickListeners() {
     }).then(function(response){
       console.log('finished PUT', response);
       getTaskList();
-      // changeColor(colorSelector);
     }).catch(function (err){
       console.log('error updating', err);
     })
