@@ -45,7 +45,7 @@ function setupClickListeners() {
   }
 //finish get task list
 //COMPLETE TASK FUNCTION
-  function completeTask( {
+  function completeTask() {
     console.log('In completeTask');
     console.log(this);
     let id = $(this).data('id')
