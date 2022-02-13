@@ -1,15 +1,21 @@
 body {
-    background-color: #d9d9d9;
+    background-color: #999999;
+}
+.btn-complete{
+    background-color: #404040;
+    color:white;
+}
+    .btn-delete{
+    background-color: #404040;
+    color:white;
 }
 .cmpl {
     background-color: 	 #85e085;
     font-size: 2.0em;
-    border: solid black;
 }
 .cmplred {
     background-color: #ff4d4d;
     font-size: 2.0em;
-    border: solid black;
 }
 .inputs{
     margin-left: 150px;
