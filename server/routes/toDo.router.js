@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 // DB CONNECTION
 const pool = require("../modules/pool");
 
@@ -17,20 +16,15 @@ router.get("/", (req, res) => {
         res.sendStatus(500);
       });
   });
-  
 
 // POST
-
 router.post('/', (req, res) => {
     const newTask = req.body
     console.log('in POST', newTask);
-    
     const queryText = `
     INSERT INTO "list" ("priority", "task", "completed")
     VALUES ($1, $2, $3);
     `;
-
-        //parameterized query below, prevents SQL injection
     pool.query(queryText, [newTask.priority, newTask.task, newTask.completed])
     .then((result) => {
         res.sendStatus(201);
@@ -40,7 +34,6 @@ router.post('/', (req, res) => {
         res.sendStatus(500);
     })
 })
-
 
 // PUT
 router.put("/:id", (req, res) => {
@@ -74,7 +67,7 @@ router.delete('/:id', (req, res) => {
     })
     .catch( (error) => {
       console.log(`Error making database DELETE ${sqlText}`, error);
-      res.sendStatus(500); // Good server always responds
+      res.sendStatus(500); 
     })
 })
 

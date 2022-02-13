@@ -12,23 +12,20 @@
     </head>
     <body>
         <div class="inputs">
-        <input id="inputText" type="text" placeholder="input task"> Min<input type="range" id="priority" name="Priority"
+        <input id="inputText" type="text" size="40" placeholder="input task"><BR>
+        Min<input type="range" id="priority" name="Priority"
         min="0" max="10">
- <label for="Priority">Max Priority</label> <br>
-        <button id=submitBtn>Submit Task</button> <br>
-        <thead>
-            <div class="TQ">
-            <tr>
-            Task Queue
-            </tr>
-            </div>
-         <thead>
-        <tbody>
-            <div id="taskList"></div>
+ <label for="Priority">Max Priority</label><br>
+        <button id=submitBtn class="subbtn">Submit Task</button> 
+        </div>
+        <div class="tl">
+        <h3>Task Queue</h3>
+        </div>
+        <div id="taskList">
             <tr>
             <!-- tasks appended here  -->
             </tr>
         </div>
-        </tbody>
+        
     </body>
 </html>

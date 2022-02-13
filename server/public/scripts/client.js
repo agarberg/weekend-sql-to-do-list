@@ -5,24 +5,14 @@ $(document).ready(function () {
     setupClickListeners();
     getTaskList();
     // load existing list on page load
-   
-  }); // end doc ready
-
-let colorSelector
-
+}); // end doc ready
+//start click listeners 
 function setupClickListeners() {
     $('#submitBtn').on( 'click', postTask);
     $('#taskList').on( 'click', '.btn-delete', deleteTask);
-    $('#taskList').on( 'click', '.btn-complete', completeTask) 
-    // $('#taskList').on( 'click', '.btn-complete', changeColor) 
+    $('#taskList').on( 'click', '.btn-complete', completeTask)  
 }
-    
-    
-
-
-
-
-  // Get TASK LIST FROM SERVER
+  // Get TASK LIST FROM SERVER, APPEND TO DOM
   function getTaskList() {
     console.log("in get task list");
     $.ajax({
@@ -34,19 +24,19 @@ function setupClickListeners() {
         $("#taskList").empty();
         for (let i = 0; i < response.length; i++) {
           if (response[i].completed) { 
-          $("#taskList").append(`<tr class='cmpl'>
+          $("#taskList").append(`<tr class="cmpl">
           <td>${response[i].task}</td>
           <td><button type="button" class="btn-delete" data-id=${response[i].id}>Delete</button>
-          <div class='cmpl'><Button class="btn-complete" id="btn-complete" data-id=${response[i].id}>Completed!</button></div></td>
-          </tr>`);
+          <Button class="btn-complete" id="btn-complete" data-id=${response[i].id}>Completed!</button></td></tr>`
+          );
         } 
-         else {
-            $("#taskList").append(`<tr class='cmplred'>
-            <td>${response[i].task}</td>
-            <td><button class="btn-delete" data-id=${response[i].id}>Delete</button>
-            <Button class="btn-complete" id="btn-complete" data-id=${response[i].id}>Click To Complete</button></div></td>
-            </tr>`);
-          }
+        else {
+          $("#taskList").append(`<tr class="cmplred">
+          <td>${response[i].task}</td>
+          <td><button class="btn-delete" data-id=${response[i].id}>Delete</button>
+          <Button class="btn-complete" id="btn-complete" data-id=${response[i].id}>Click To Complete</button></td></tr>
+          `);
+        }
       }
     })
       .catch(function (error) {
@@ -54,7 +44,6 @@ function setupClickListeners() {
       })
   }
 //finish get task list
-
 //COMPLETE TASK FUNCTION
   function completeTask(){
     console.log('In completeTask');
@@ -71,11 +60,6 @@ function setupClickListeners() {
       console.log('error updating', err);
     })
   };
-
-  // function changeColor(colorSelector) {
-  //   $(colorSelector).toggleClass('blue'); 
-  // }
-
     ///DELETE TASK FUNCTION
     function deleteTask() {
       console.log('in delete function')
@@ -94,12 +78,11 @@ function setupClickListeners() {
     }
 
 // END DELETE FUNCTION
-
-
-      function postTask() {
+// TAKE TASK INSERTED AND SEND TO DATABASE
+    function postTask() {
         if ($("#inputText").val() === '') 
         {
-          alert('You must fill out the entire form.');
+          alert('You forgot to add your task, silly!');
           return;
       }
         console.log('in submitTask')
@@ -117,7 +100,7 @@ function setupClickListeners() {
             console.log("Response from server.", response);
             //empty inputs
             $("#inputText").val(""),
-            $("#priority").val(0)
+            $("#priority").val(5)
       
             // append to DOM with a function here
             getTaskList();

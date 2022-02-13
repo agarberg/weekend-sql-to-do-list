@@ -1,13 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const toDorouter= require('./routes/toDo.router.js');
-
 const app = express();
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use('/todo', toDorouter);
-
-// Serve back static files by default
 app.use(express.static('server/public'))
 
 // Start listening for requests on a specific port
