@@ -50,7 +50,7 @@ router.put("/:id", (req, res) => {
   let sqlText = '';
   sqlText = `
       UPDATE list
-      SET completed = 'TRUE', priority = '0'
+      SET completed = NOT completed, priority = '0'
       WHERE id=$1;`
   let sqlValues = [idToUpdate];
   pool.query(sqlText, sqlValues)

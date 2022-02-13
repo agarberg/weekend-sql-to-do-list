@@ -1,6 +1,21 @@
-.btn-complete {
-    background-color: white;
+.cmplred {
+    background-color: #ffcccc;
 }
-.btn-complete.green {
-    background-color: green; 
+.cmpl {
+    background-color: aquamarine;
+}
+.inputs{
+    display: flexbox;
+    justify-content: center;
+    align-items: flex-start;
+}
+.TQ {
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+}
+#tasklist{
+    display: flexbox;
+    justify-content: center;
+    align-items: flex-end;
 }
